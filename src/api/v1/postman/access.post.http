@@ -7,7 +7,7 @@ Content-Type: application/json
 x-api-key: ded337934798897dc657dff9d8df715337f6379e330791ee33bf5ec6ed71561d607844bef7012754d9b8057e0c4fb377eb1d678e21e1bca6c2ee2495311b5b5c
 
 {
-  "name": "thangvb",
-  "email": "thangvb01.dev@gmail.com",
+  "name": "helloworld",
+  "email": "02@gmail.com",
   "password": "abc123"
 }

@@ -2,12 +2,14 @@
 
 const StatusCode = {
   FORBIDDEN: 403,
-  CONFLICT: 409
+  CONFLICT: 409,
+  UNAUTHORIZED: 401
 }
 
 const ReasonStatusCode = {
   FORBIDDEN: 'Bad request',
-  CONFLICT: 'Conflict error'
+  CONFLICT: 'Conflict error',
+  UNAUTHORIZED: '...'
 }
 
 class ErrorResponse extends Error {
@@ -24,6 +26,12 @@ class ConflictRequestError extends ErrorResponse {
 }
 
 class BadRequestError extends ErrorResponse {
+  constructor(message = ReasonStatusCode.UNAUTHORIZED, statusCode = StatusCode.UNAUTHORIZED) {
+    super(message,statusCode)
+  }
+}
+
+class AuthFailureError extends ErrorResponse {
   constructor(message = ReasonStatusCode.FORBIDDEN, statusCode = StatusCode.FORBIDDEN) {
     super(message,statusCode)
   }
@@ -31,5 +39,6 @@ class BadRequestError extends ErrorResponse {
 
 module.exports = {
   ConflictRequestError,
-  BadRequestError
+  BadRequestError,
+  AuthFailureError
 }

@@ -8,7 +8,7 @@ const StatusCode = {
 }
 
 const ReasonStatusCode = {
-  OK: 'Bad Success',
+  OK: 'Success',
   CREATED: 'Created!'
 }
 
@@ -39,5 +39,6 @@ class CREATED extends SuccessResponse {
 
 module.exports = {
   OK,
-  CREATED
+  CREATED,
+  SuccessResponse
 }

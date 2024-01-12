@@ -2,8 +2,8 @@
 //!dmbg
 const mongoose = require('mongoose');
 
-const COLLECTION_NAME = 'Key'
-const DOCUMENT_NAME = 'Keys'
+const COLLECTION_NAME = 'Keys'
+const DOCUMENT_NAME = 'Key'
 
 var keyTokenSchema = new mongoose.Schema({
   user:{
@@ -19,9 +19,13 @@ var keyTokenSchema = new mongoose.Schema({
     type:String,
     required:true  
   },
-  refreshToken:{
+  refreshTokensUsed:{
     type:Array,
     default: []
+  }, 
+  refreshToken: {
+    type:String,
+    required:true
   }
 }, {
   collection: COLLECTION_NAME,
