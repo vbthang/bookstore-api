@@ -20,10 +20,23 @@ app.use(express.urlencoded({
 require('./api/v1/dbs/init.mongodb')
 // const { countConnect } = require('./api/v1/helpers/check.connect')
 // countConnect()
-
 // init routes
 app.use('', require('./api/v1/routes'))
 
-// inti error handler
+// init error handler
+app.use((req, res, next) => {
+  const error = new Error('Not Found')
+  error.status = 404
+  next(error)
+})
+
+app.use((error, req, res, next) => {
+  const statusCode = error.status || 500
+  return res.status(statusCode).json({
+    status: 'error',
+    code: statusCode,
+    message: error.message || 'Internal Server Error'
+  })
+})
 
 module.exports = app
