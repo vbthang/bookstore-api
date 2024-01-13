@@ -24,7 +24,7 @@ class AccessService {
     if(!foundUser) throw new BadRequestError('Shop not registered')
 
     // 2.Match password
-    const match = bcrypt.compare( password, foundUser.password )
+    const match = await bcrypt.compare( password, foundUser.password )
     if(!match) throw new AuthFailureError('Authentication error')
 
     // 3.Create AT & RT and save

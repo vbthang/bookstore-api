@@ -2,7 +2,7 @@
 
 const HEADER = {
   API_KEY:'x-api-key',
-  AUTHORIZATION: 'athorization'
+  AUTHORIZATION: 'authorization'
 }
 
 const { findById } = require("../services/apikey.service")
