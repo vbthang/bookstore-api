@@ -4,10 +4,10 @@
 
 POST {{url_dev}}/user/signup
 Content-Type: application/json
-x-api-key: ded337934798897dc657dff9d8df715337f6379e330791ee33bf5ec6ed71561d607844bef7012754d9b8057e0c4fb377eb1d678e21e1bca6c2ee2495311b5b5c
+x-api-key: d280f4140abe419fe90cfa7cf0b7c1e80b360f237ecdf15412946a4f149133c9daff14b23eb71a27a62ed82e538874810ea52e44363bdf988aca2858360b3c64
 
 {
-  "name": "helloworld",
-  "email": "02@gmail.com",
+  "name": "thangvb",
+  "email": "thangvb.dev@gmail.com",
   "password": "abc123"
 }

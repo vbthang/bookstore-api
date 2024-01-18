@@ -18,6 +18,12 @@ const RoleUser = {
 
 class AccessService {
 
+  static logout = async (keyStore) => {
+    const delKey = await KeyTokenService.removeKeyById(keyStore._id)
+    console.log({delKey})
+    return delKey
+  }
+
   static login = async( { email, password, refreshToken = null }) => {
     // 1.Check email
     const foundUser = await findByEmail({ email })
@@ -51,7 +57,7 @@ class AccessService {
     const holderUser = await userModel.findOne({ email }).lean()
     
     if(holderUser) {
-      throw new BadRequestError('Error: Shop already registered!') 
+      throw new BadRequestError('Error: User already registered!') 
     }
 
     const passwordHash = await bcrypt.hash(password, 10)
@@ -61,18 +67,6 @@ class AccessService {
     })
 
     if(newUser) {
-      // created privateKey, publicKey
-      // const { privateKey, publicKey } = crypto.generateKeyPairSync('rsa', {
-      //   modulusLength: 4096,
-      //   publicKeyEncoding: {
-      //     type: 'pkcs1',
-      //     format: 'pem'
-      //   },
-      //   privateKeyEncoding: {
-      //     type: 'pkcs1',
-      //     format: 'pem'  
-      //   }
-      // })
       const privateKey = crypto.randomBytes(64).toString('hex')
       const publicKey = crypto.randomBytes(64).toString('hex')
 
