@@ -13,5 +13,6 @@ router.post('/user/login', asyncHandler(accessController.login))
 // authentication //
 router.use(authentication)
 router.post('/user/logout', asyncHandler(accessController.logout))
+router.post('/user/handleRefreshToken', asyncHandler(accessController.handleRefreshToken))
 
 module.exports = router
