@@ -18,18 +18,21 @@ class Book {
   }
 
   // create new book
-  async createBook() {
-    return await book.create(this)
+  async createBook(book_id) {
+    return await book.create({...this, _id: book_id})
   }
 }
 
 // Define sub-class for different book
 class Detail extends Book {
   async createBook() {
-    const newDetail = await detail.create(this.book_attributes)
+    const newDetail = await detail.create({
+      ...this.book_attributes,
+      book_shop: this.book_shop
+    })
     if(!newDetail) throw new BadRequestError('create new Detail error')
     
-    const newBook = await super.createBook(this)
+    const newBook = await super.createBook(newDetail._id)
     if(!newBook) throw new BadRequestError('create new Book error')
 
     return newBook

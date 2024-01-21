@@ -13,7 +13,7 @@ var bookSchema = new mongoose.Schema({
   book_price: { type: Number, required: true },
   book_quantity: { type: Number, required: true },
   book_type: { type: String, required: true, enum: ['Novel', 'Science Fiction', 'Adventure', 'Humor', 'Psychological', 'Biography', 'Program', 'Detail'] },
-  book_shop: String,
+  book_shop: { type: mongoose.Schema.Types.ObjectId, ref: 'User'},
   book_attributes: { type: mongoose.Schema.Types.Mixed, required: true },
 }, {
   timestamps: true,
@@ -23,7 +23,8 @@ var bookSchema = new mongoose.Schema({
 const attrSchema = new mongoose.Schema({
   size: String,
   number_of_pages: Number,
-  publishing_company: { type: String, required: true }
+  publishing_company: { type: String, required: true },
+  book_shop: { type: mongoose.Schema.Types.ObjectId, ref: 'User'}
 }, {
   collection: 'Details',
   timestamps: true
