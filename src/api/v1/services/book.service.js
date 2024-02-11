@@ -2,8 +2,8 @@
 
 const { book, detail } = require('../models/book.model')
 const { BadRequestError, ForbiddenError } = require('../core/error.response')
-const { findAllDraftForUser, publishBookByUser, findAllPublishForUser, unPublishBookByUser, searchBooksByUser, findAllBooks, findBook, updateBookById  } = require('../models/repositories/book.repo')
-const { removeUnderfinedObject } = require('../utils')
+const { findAllDraftForUser, publishBookByUser, findAllPublishForUser, unPublishBookByUser, searchBooksByUser, findAllBooks, findBook, updateBookById,findDetail } = require('../models/repositories/book.repo')
+const { removeUnderfinedObject, updateNestedObjectParser } = require('../utils')
 
 class Book {
   constructor({
@@ -49,9 +49,9 @@ class Detail extends Book {
     const objectParams = removeUnderfinedObject(this)
     if(objectParams.book_attributes) {
       // update child
-      console.log(bookId)
       await updateBookById({bookId, payload:objectParams.book_attributes, model:detail})
     }
+    objectParams.book_attributes = await findDetail({book_id : bookId, unSelect : ['_id', 'book_shop', '__v', 'createdAt', 'updatedAt']})
 
     const updateBook = await super.updateBook(bookId, objectParams)
     return updateBook

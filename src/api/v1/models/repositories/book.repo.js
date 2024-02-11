@@ -67,6 +67,10 @@ const findBook = async ({ book_id, unSelect }) => {
   return await book.findById(book_id).select(unGetSelectData(unSelect))
 }
 
+const findDetail = async ({ book_id, unSelect }) => {
+  return await detail.findById(new Types.ObjectId(book_id)).select(unGetSelectData(unSelect))
+}
+
 const updateBookById = async({model, bookId, payload, isNew = true}) => {
   return await model.findByIdAndUpdate(bookId, payload, {
     new: isNew
@@ -92,5 +96,6 @@ module.exports = {
   searchBooksByUser,
   findAllBooks,
   findBook,
-  updateBookById
+  updateBookById,
+  findDetail
 }

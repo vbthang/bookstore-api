@@ -23,9 +23,25 @@ const removeUnderfinedObject = obj => {
   return obj
 }
 
+const updateNestedObjectParser = obj => {
+  const final = {}
+  Object.keys(obj).forEach(k => {
+    if( typeof obj[k] === 'object' && !Array.isArray(obj[k])) {
+      const response = updateNestedObjectParser(obj[k])
+      Object.keys(response).forEach( a => {
+        final[`${k}.${a}`] = response[a]
+      });
+    } else {
+      final[k] = obj[k]
+    }
+  })
+  console.log(obj)
+}
+
 module.exports = {
   getInfoData,
   getSelectData,
   unGetSelectData,
-  removeUnderfinedObject
+  removeUnderfinedObject,
+  updateNestedObjectParser
 }
