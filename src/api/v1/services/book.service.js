@@ -4,6 +4,7 @@ const { book, detail } = require('../models/book.model')
 const { BadRequestError, ForbiddenError } = require('../core/error.response')
 const { findAllDraftForUser, publishBookByUser, findAllPublishForUser, unPublishBookByUser, searchBooksByUser, findAllBooks, findBook, updateBookById,findDetail } = require('../models/repositories/book.repo')
 const { removeUnderfinedObject, updateNestedObjectParser } = require('../utils')
+const { insertInventory } = require('../models/repositories/inventory.repo')
 
 class Book {
   constructor({
@@ -21,7 +22,17 @@ class Book {
 
   // create new book
   async createBook(book_id) {
-    return await book.create({...this, _id: book_id})
+    const newBook =  await book.create({...this, _id: book_id})
+    if(newBook) {
+      // add book_stock => inventory collection
+      await insertInventory({
+        bookId: newBook._id,
+        shopId: this.book_shop,
+        stock: this.book_quantity
+      })
+    }
+
+    return newBook
   }
 
   // update book
