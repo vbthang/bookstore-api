@@ -2,7 +2,7 @@
 
 const { Types } = require('mongoose')
 const { book, detail } = require('../../models/book.model')
-const { getSelectData, unGetSelectData } = require('../../utils')
+const { getSelectData, unGetSelectData, convertToObjectIdMongodb } = require('../../utils')
 
 const findAllDraftForUser = async( {query, limit, skip }) => {
   return await queryBook({query, limit, skip })
@@ -88,6 +88,10 @@ const queryBook = async ({ query, limit, skip }) => {
   .exec()
 }
 
+const getBookById = async (bookId) => {
+  return await book.findOne({ _id: convertToObjectIdMongodb(bookId)}).lean()
+}
+
 module.exports = {
   findAllDraftForUser,
   publishBookByUser,
@@ -97,5 +101,6 @@ module.exports = {
   findAllBooks,
   findBook,
   updateBookById,
-  findDetail
+  findDetail,
+  getBookById
 }
