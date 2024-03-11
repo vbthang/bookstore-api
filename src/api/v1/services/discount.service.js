@@ -157,7 +157,7 @@ class DiscountService {
     })
 
     if(!foundDiscount) throw new NotFoundError(`discount doesn't exist`)
-    console.log(foundDiscount)
+    // console.log(foundDiscount)
     const { 
       discount_is_active, discount_max_uses, discount_start_date, discount_end_date,
       discount_min_order_value, discount_type, discount_max_uses_per_user, discount_users_used,
@@ -181,9 +181,9 @@ class DiscountService {
 
     if(discount_max_uses_per_user > 0) {
       const userUsedDiscount = discount_users_used.find( user => user.userId === userId )
-      console.log('----------')
-      console.log(userUsedDiscount)
-      console.log('----------')
+      // console.log('----------')
+      // console.log(userUsedDiscount)
+      // console.log('----------')
       if(userUsedDiscount) {
         //...
       }
