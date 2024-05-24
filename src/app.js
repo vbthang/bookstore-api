@@ -16,6 +16,10 @@ app.use(express.urlencoded({
   extended: true
 }))
 
+// test pub.sub redis
+require('./api/v1/test/inventory.test')
+const bookTest = require('./api/v1/test/book.test')
+bookTest.purchaseBook('book:001', 10)
 // init db
 require('./api/v1/dbs/init.mongodb')
 // const { countConnect } = require('./api/v1/helpers/check.connect')
