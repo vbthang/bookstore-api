@@ -5,6 +5,7 @@ const { BadRequestError, ForbiddenError } = require('../core/error.response')
 const { findAllDraftForUser, publishBookByUser, findAllPublishForUser, unPublishBookByUser, searchBooksByUser, findAllBooks, findBook, updateBookById,findDetail } = require('../models/repositories/book.repo')
 const { removeUnderfinedObject, updateNestedObjectParser } = require('../utils')
 const { insertInventory } = require('../models/repositories/inventory.repo')
+const NotificationService = require('./notification.service')
 
 class Book {
   constructor({
@@ -25,12 +26,22 @@ class Book {
     const newBook =  await book.create({...this, _id: book_id})
     if(newBook) {
       // add book_stock => inventory collection
-      await insertInventory({
+      const invenData = await insertInventory({
         bookId: newBook._id,
         shopId: this.book_shop,
         stock: this.book_quantity
       })
+      // push noti to system collection
+      NotificationService.pushNotiToSystem({
+        type: 'SHOP-001',
+        receivedId: 1,
+        senderId: this.book_shop,
+        options: { book_name: this.book_name, shop_name: this.book_shop }
+      }).then(rs => console.log(rs))
+      .catch(console.error)
+      console.log(`invenData::`, invenData)
     }
+
 
     return newBook
   }
