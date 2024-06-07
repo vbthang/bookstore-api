@@ -8,6 +8,7 @@ router.use(apiKey)
 // Check permission
 router.use(permission('0000'))
 
+router.use('/v1/api/upload', require('./upload'))
 router.use('/v1/api/checkout', require('./checkout'))
 router.use('/v1/api/comment', require('./comment'))
 router.use('/v1/api/notification', require('./notification'))
