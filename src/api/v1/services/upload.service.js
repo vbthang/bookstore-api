@@ -1,6 +1,63 @@
 'use strict'
 
 const cloudinary = require('../../../config/cloudinary.config')
+const crypto = require('crypto')
+// const {
+//     s3,
+//     PutObjectCommand
+// } = require('../../../config/s3.config')
+const {
+    s3,
+    PutObjectCommand,
+    GetObjectCommand, 
+    DeleteObjectCommand
+} = require('../../../config/s3.config')
+const { getSignedUrl } = require("@aws-sdk/s3-request-presigner")
+
+const randomImageName = () => crypto.randomBytes(16).toString('hex')
+
+// START UPLOAD FILE USE S3CLIENT
+
+// 1.UPLOAD FROM IMAGE LOCAL BY S3
+
+const uploadImageFromLocalS3 = async ({
+    file
+}) => {
+    try {
+        const imageName = randomImageName()
+        const command = new PutObjectCommand({
+            Bucket: process.env.DO_BUCKET_NAME,
+            Key: imageName, //file.orginalname || 'unknown',
+            Body: file.buffer,
+            ContentType: 'image/jpeg'
+        })
+
+        // 1. AWS
+        const result = await s3.send( command )
+        // 2.DO
+        // const result = await s3.putObject(obj)
+        console.log(result)
+        
+        // export url
+        const signedUrl = new GetObjectCommand({
+            Bucket: process.env.DO_BUCKET_NAME,
+            Key: imageName
+        })
+        const url = await getSignedUrl(s3, signedUrl, { expiresIn: 3600 })
+        console.log(`url:`, url)
+
+        return url
+
+    } catch (err) {
+        console.error(err)
+    }
+}
+
+
+
+
+
+// END UPLOAD FILE USE S3CLIENT
 
 // 1.UPLOAD FROM URL IMAGE
 const uploadImageFromUrl = async () => {
@@ -48,5 +105,6 @@ const uploadImageFromLocal = async ({
 
 module.exports = {
     uploadImageFromUrl,
-    uploadImageFromLocal
+    uploadImageFromLocal,
+    uploadImageFromLocalS3
 }

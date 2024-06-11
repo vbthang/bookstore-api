@@ -16,4 +16,6 @@ const router = express.Router()
 router.get('/product', asyncHandler(UploadController.uploadFile))
 router.get('/product/thumb', uploadDisk.single('file'), asyncHandler(UploadController.uploadFileThumb))
 
+router.post('/product/bucket', uploadMemory.single('file'), asyncHandler(UploadController.uploadFileFromLocalS3))
+
 module.exports = router
