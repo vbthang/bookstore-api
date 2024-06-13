@@ -7,36 +7,21 @@ const COLLECTION_NAME = "Users"
 
 // Declare the Schema of the Mongo model
 var userSchema = new mongoose.Schema({
-    name:{
-        type:String,
-        trim: true,
-        maxLength: 150
-    },
-    email:{
-        type:String,
-        unique:true,
-        trim: true
-    },
-    password: {
-        type:String,
-        required:true
-    },
-    status:{
-        type:String,
-        enum: ['active', 'inactive'],
-        default: 'inactive'
-    },
-    verify:{
-        type:mongoose.Schema.Types.Boolean,
-        default: false,
-    },
-    roles: {
-      type: Array,
-      default: []
-    }
+    usr_id: { type: Number, required: true }, // using redis
+    usr_slug: { type: String, required: true },
+    usr_name: { type: String, default: '' },
+    usr_password: { type: String, default: '' },
+    usr_salf: { type: String, default: '' },
+    usr_email: { type: String, required: true },
+    usr_phone: { type: String, default: '' },
+    usr_sex: { type: String, default: '' },
+    usr_avatar: { type: String, default: '' },
+    usr_date_of_birth: { type: Date, default: null },
+    usr_role: { type: mongoose.Schema.Types.ObjectId, ref: 'Role'},
+    usr_status: { type: String, default: 'pending', enum: ['pending', 'active', 'block'] },
 }, {
-  timestamps: true,
-  collection: COLLECTION_NAME
+    timestamps: true,
+    collection: COLLECTION_NAME
 });
 
 //Export the model

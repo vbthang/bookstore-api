@@ -9,7 +9,7 @@ const inventorySchema = new mongoose.Schema({
   inven_bookId: { type: mongoose.Schema.Types.ObjectId, ref: 'Book'},
   inven_location: { type: String, default: 'unKnow' },
   inven_stock: { type: Number, required: true },
-  inven_shopId: { type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+  inven_shopId: { type: mongoose.Schema.Types.ObjectId, ref: 'Shop'},
   inven_reservations: { type: Array, default: []}
   /*
     cartId

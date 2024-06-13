@@ -79,6 +79,7 @@ class BookController {
   }
 
   findAllBooks = async (req, res, next) => {
+    console.log('TEST');
     new SuccessResponse({
       message: 'Get list findAllBooks success',
       metadata: await BookService.findAllBooks(req.query)

@@ -1,13 +1,13 @@
 'use strict'
 
-const userModel = require("../models/user.model")
+const shopModel = require("../models/shop.model")
 const bcrypt = require('bcrypt')
 const crypto = require('node:crypto')
 const KeyTokenService = require("./keyToken.service")
 const { createTokenPair, verifyJWT } = require("../auth/authUtils")
 const { getInfoData } = require("../utils") 
 const { BadRequestError, ConflictRequestError, AuthFailureError, ForbiddenError } = require("../core/error.response")
-const { findByEmail } = require("./user.service")
+const { findByEmail } = require("./shop.service")
 const keytokenModel = require("../models/keytoken.model")
 
 const RoleUser = {
@@ -96,7 +96,7 @@ class AccessService {
   }
 
   static signUp = async ({ name, email, password }) => {
-    const holderUser = await userModel.findOne({ email }).lean()
+    const holderUser = await shopModel.findOne({ email }).lean()
     
     if(holderUser) {
       throw new BadRequestError('Error: User already registered!') 
@@ -104,7 +104,7 @@ class AccessService {
 
     const passwordHash = await bcrypt.hash(password, 10)
 
-    const newUser = await userModel.create({
+    const newUser = await shopModel.create({
       name, email, password:passwordHash, roles: [RoleUser.USER]
     })
 

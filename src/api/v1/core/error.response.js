@@ -1,5 +1,9 @@
 'use strict'
 
+// const myloggerLog = require('../loggers/mylogger.log')
+// const logger = require("../loggers/winston.log")
+const MyLogger = require('../loggers/mylogger.log')
+
 const StatusCode = {
   FORBIDDEN: 403,
   CONFLICT: 409,
@@ -18,6 +22,11 @@ class ErrorResponse extends Error {
   constructor( message, status) {
     super(message)
     this.status = status
+    this.now = Date.now()
+
+    // Log the error use winston
+    // logger.error(`${this.status} - ${this.message}`)
+    // MyLogger.error(this.message, ['/api/v1/login', 'vv123', {error: 'Bad req err'}])
   }
 }
 

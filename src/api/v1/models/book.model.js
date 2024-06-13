@@ -15,7 +15,7 @@ var bookSchema = new mongoose.Schema({
   book_price: { type: Number, required: true },
   book_quantity: { type: Number, required: true },
   book_type: { type: String, required: true, enum: ['Novel', 'Science Fiction', 'Adventure', 'Humor', 'Psychological', 'Biography', 'Program', 'Detail'] },
-  book_shop: { type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+  book_shop: { type: mongoose.Schema.Types.ObjectId, ref: 'Shop'},
   book_attributes: { type: mongoose.Schema.Types.Mixed, required: true },
   // more
   book_ratingsAverage: {
@@ -47,7 +47,7 @@ const attrSchema = new mongoose.Schema({
   size: String,
   number_of_pages: Number,
   publishing_company: { type: String, required: true },
-  book_shop: { type: mongoose.Schema.Types.ObjectId, ref: 'User'}
+  book_shop: { type: mongoose.Schema.Types.ObjectId, ref: 'Shop'}
 }, {
   collection: 'Details',
   timestamps: true
