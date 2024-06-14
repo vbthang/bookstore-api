@@ -38,6 +38,8 @@ app.use((req, res, next) => {
 
 // init db
 require('./api/v1/dbs/init.mongodb')
+const initRedis = require('./api/v1/dbs/init.redis')
+initRedis.initRedis()
 // const { countConnect } = require('./api/v1/helpers/check.connect')
 // countConnect()
 // init routes
